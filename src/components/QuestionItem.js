@@ -1,9 +1,14 @@
 import React from "react";
+import { cloneElement } from "react/cjs/react.production.min";
 
-function QuestionItem({ question }) {
+function QuestionItem({ question, onDeleteClick}) {
   const { id, prompt, answers, correctIndex } = question;
 
-  const options = answers.map((answer, index) => (
+  function handleDeleteClick (){
+    onDeleteClick(id);
+  }
+
+  const options = (answers || []).map((answer, index) => (
     <option key={index} value={index}>
       {answer}
     </option>
@@ -17,7 +22,7 @@ function QuestionItem({ question }) {
         Correct Answer:
         <select defaultValue={correctIndex}>{options}</select>
       </label>
-      <button>Delete Question</button>
+      <button onClick={handleDeleteClick} >Delete Question</button>
     </li>
   );
 }
